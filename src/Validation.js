@@ -5,7 +5,7 @@ const Validation = (info) => {
     let errors = {};
 
     if(!info.fullname) {
-        errors.fulllname = "Name is required";
+        errors.fullname = "Name is required";
     }
 
     if(!info.email) {
