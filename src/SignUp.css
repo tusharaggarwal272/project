@@ -79,7 +79,7 @@
     text-decoration: none;
 }
 .signUp-error{
-    border: 3px solid red;
+    /* border: 3px solid red; */
     color: red;
     text-align: left;
     width: 100%;

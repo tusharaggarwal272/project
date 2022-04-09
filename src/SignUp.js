@@ -63,7 +63,7 @@ function SignUp() {
               <p>+91</p>
             </div> */}
             <input
-              type="text"
+              type="tel"
               name='number'
               value={info.number}
               className="signUp-input"
