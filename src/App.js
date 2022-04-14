@@ -1,21 +1,20 @@
 import './App.css';
-import SignUp from './SignUp';
-import Login from './Login';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
+import Home from './pages/Home';
 
 function App() {
   return (
-
-
-    <Router>
       <div className="App">
-        <Routes>
-          <Route path="/login" element={[<Login />]} />
-          <Route path="/signup" element={[<SignUp />]} />
-        </Routes>
+        <BrowserRouter>
+          
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={SignUp} />
+          <Route path='/home' exact component={Home}/>
+        </BrowserRouter>
       </div>
-    </Router>
-
   );
 }
 

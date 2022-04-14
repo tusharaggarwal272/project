@@ -17,21 +17,22 @@
     /* border: 3px solid black; */
     /* width: 100vw; */
     background-color: white;
-    margin-top: 12px;
-    width: 800px;
-    height: 800px;
+   
+    width: 60%;
+    height: 80%;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 .signUp-form{
     /* border: 3px solid red; */
-    padding: 12px;
-    margin: 12px;
+    /* padding: 12px; */
+    /* margin: 12px; */
+    margin-top: 5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 750px;
+    /* height: 750px; */
 }
 .signUp-field{
     /* border: 3px solid yellow; */
@@ -41,7 +42,7 @@
     justify-content: center;
     width: 90%;
     text-align: left;
-    margin: 23px;
+    /* margin: 23px; */
 }
 .signUp-label{
     /* border: 2px solid black; */
@@ -51,7 +52,7 @@
 .signUp-input{
     /* border: 2px solid red; */
     width: 100%;
-    margin:10px 0 12px 0;
+    /* margin:10px 0 12px 0; */
     height: 45px;
     border-radius:0.25rem ;
     font-size: 16px;
