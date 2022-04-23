@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt')
 
 const otpmodel = require('../models/otpModel');
 const usermodel = require('../models/user');
@@ -29,8 +28,8 @@ router.post('/login', async (req, res) => {
         const user = await usermodel.findOne({ email: req.body.email });
         console.log(user);
         console.log(user.password);
-        const result = await bcrypt.compare(req.body.password, user.password);
-        console.log(result)
+        // const result = await bcrypt.compare(req.body.password, user.password);
+        // console.log(result)
 
         // if(result){
         if (user.password === req.body.password)

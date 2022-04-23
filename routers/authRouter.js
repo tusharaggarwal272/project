@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt')
 
 const Otp = require('../models/otpModel');
 const User = require('../models/user');
-const Email=require('../models/otpModelEmail');
+const Email = require('../models/otpModelEmail');
 
 const _ = require('lodash');
 const axios = require('axios');
@@ -107,7 +106,7 @@ router.post('/mobileverified/verify', async (req, res) => {
 
 })
 
-router.post('/emailverified', async(req, res) => {
+router.post('/emailverified', async (req, res) => {
     //will send the otp on email:
 
     console.log("getting the email verified")
@@ -130,7 +129,7 @@ router.post('/emailverified', async(req, res) => {
             to: `${req.body.email}`,
             subject: 'Your OTP for usmart validation',
             text: `Your OTP is ${OTP}`,
-            
+
 
         }
         transporter.sendMail(mailoptions, function (err, data) {
@@ -151,7 +150,7 @@ router.post('/emailverified', async(req, res) => {
 
 })
 
-router.post('/emailverified/verify', async(req, res) => {
+router.post('/emailverified/verify', async (req, res) => {
     //will verify the otp on email:
     console.log()
     console.log(req.body);
@@ -169,7 +168,7 @@ router.post('/emailverified/verify', async(req, res) => {
 
     if (rightotpfind.email === req.body.email && rightotpfind.otp === parseInt(req.body.otp)) {
         // const user = new User(_.pick(req.body, ["number"]));
-      
+
         try {
             console.log("getting email verified");
             const user = await User.findOneAndUpdate({ "email": req.body.email }, { "emailverified": true });
