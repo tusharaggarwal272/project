@@ -16,8 +16,8 @@ function Login() {
         // console.log(userdetails);
         //    const res=await axios.post('/api/users/login',userdetails)
         axios.post('/api/users/login', userdetails).then((res) => {
-            if(res.data.msg=="Login success"){
-                
+            if (res.data.msg == "Login success") {
+
                 localStorage.setItem('user', JSON.stringify(res.data));
                 window.open("/home")
             }
