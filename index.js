@@ -6,6 +6,7 @@ const usermodel = require('./models/user')
 const otpmodel = require('./models/otpModel');
 const userRouter = require('./routers/userRouter');
 const authRouter = require('./routers/authRouter')
+const courseRouter = require('./routers/courseRouter');
 
 
 
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/users', userRouter);
 app.use('/users/verification', authRouter);
-
+app.use('/api/courses', courseRouter)
 
 app.get('/', (req, res) => {
     console.log("Hello from world");

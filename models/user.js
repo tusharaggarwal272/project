@@ -30,7 +30,14 @@ const userSchema = new mongoose.Schema({
     mobileverified: {
         type: Boolean,
         default: false
-    }
+    },
+    courses: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course'
+        }
+    ]
+
 }, {
     timestamps: true
 })

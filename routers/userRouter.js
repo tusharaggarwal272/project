@@ -10,12 +10,13 @@ router.post('/register', async (req, res) => {
     const { email, password, number, fullname } = req.body;
     console.log("in register route");
     try {
-        const hashpass = await bcrypt.hash(password, 12);
+        // const hashpass = await bcrypt.hash(password, 12);
         const user = await usermodel.create({ email: email, password: password, contact: number, username: fullname });
         console.log(user);
 
         return res.status(200).json({ msg: "user created successfully" });
     } catch (error) {
+        console.log(error.message);
         return res.status(400).json({ msg: "cant create user" });
     }
 })
