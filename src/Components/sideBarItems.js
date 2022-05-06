@@ -1,7 +1,8 @@
+import HomeIcon from '@mui/icons-material/Home';
 export default {
   "data": [
     {
-      "name": "Home",
+      "name": `Home`,
       "url": "/home"
     },
 

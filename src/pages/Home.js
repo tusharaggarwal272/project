@@ -67,6 +67,7 @@ function Home() {
       console.log(res);
       setMobileVerified(true);
 
+      // localStorage.setItem('user', ...{ user, ...{ mobileverified: true } });
       user.mobileverified = true;
       setloading(false);
     })
@@ -88,14 +89,7 @@ function Home() {
     // console.log(otp)
   }
 
-  // useEffect(() => {
-  //   axios.post('/api/users/mobileverified').then((res) => {
-  //     console.log(res);
-  //   })
-  //   axios.post('/api/users/emailverified').then((res) => {
-  //     console.log(res);
-  //   })
-  // }, [])
+
 
   useEffect(() => {
     // console.log(typeof (user));
@@ -104,7 +98,12 @@ function Home() {
     setEmailVerified(user.emailverified);
   }, [user])
 
-
+  const handleLogout = () => {
+    console.log("clicking on logout");
+    localStorage.removeItem("user");
+    window.location.reload();
+    return;
+  }
 
 
   if (user) {
@@ -122,28 +121,18 @@ function Home() {
   }
   return (
 
-    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100vw', height: '100vh' }}>
-      {/* <Navbar /> */}
+    <Box sx={{ position: 'relative', display: 'flex', width: '100vw', height: '100vh', overflowX: 'hidden' }}>
+      <Box>
+        <MenuBar />
+      </Box>
 
-      <Box sx={{ width: '100%', height: '100%', position: 'absolute', right: '0%' }}>
-        {/* <Navbar /> */}
-        {/* <Typography>You are the home page congrats!</Typography> */}
+
+
+
+      <Box sx={{ width: '80vw', height: '100%', position: 'absolute', right: '0%' }}>
+
         <>
-          {/*<div className="top-nav">
-           <div className="top-nav2">
-             <div className="top-navbar">
-               <div className="user-icon" style={{position:'relative',marginLeft:'0.75rem'}}>
-               <div>
-               <button className="user-button">
-               <svg xmlns="http://www.w3.org/2000/svg" className="svg-file"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user h-6 w-6">
-                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-               <circle cx="12" cy="7" r="4"></circle></svg>
-               </button>
-               </div>
-               </div>
-             </div>
-             </div>
-  </div> */}
+          <Button sx={{ position: 'absolute', top: '2%', right: '5%' }} onClick={handleLogout}>Logout</Button>
           <div>
             <div className="top-heading">
               <h1> Hi, Antrixsh 👋</h1>
@@ -187,9 +176,7 @@ function Home() {
                     </a>
 
                   </div>
-                  {/* <div className="image">
-                   <img  className="image"src="https://source.unsplash.com/WHWYBmtn3_0/1600x900" />
-</div> */}
+
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -412,7 +399,7 @@ function Home() {
               />
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 {
-                  mobileverified == true ? <CheckCircleOutlineOutlinedIcon sx={{ background: 'green', width: '40%', height: '60%' }} /> :
+                  user.mobileverified == true ? <CheckCircleOutlineOutlinedIcon sx={{ background: 'green', width: '40%', height: '60%' }} /> :
                     mobileotpreq == false ? <Button sx={{ width: '20%' }} onClick={handlemobileotpreq}>Get OTP</Button> :
                       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}><TextField onChange={(e) => handlechange(e)} label={'Enter OTP'} size='small' sx={{ m: 1 }} />
                         {

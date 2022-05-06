@@ -11,6 +11,8 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useState } from 'react'
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import MenuBar from '../Components/MenuBar';
+
 
 function NewSection() {
     const [open, setOpen] = React.useState(true);
@@ -31,32 +33,37 @@ function NewSection() {
 
     const params = useParams();
     return (
-        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop: '5%', marginTop: '2%', alignItems: 'center' }}>
-            <Collapse in={open} sx={{ width: '95%' }}>
-                <Alert severity="success"
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}
-                        >
-                            <CloseIcon fontSize="inherit" />
-                        </IconButton>
-                    }>
-                    Collection was successfully created.
-                </Alert>
-            </Collapse>
-
-            <Typography sx={{ fontSize: '250%', margin: '1%', marginBottom: '0%', fontWeight: 'bold', width: '90%', textAlign: 'start' }}> {(params.samplename)}</Typography>
-            <Box sx={{ width: '90%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', color: '#D3D3D3' }}>
-                <Typography sx={{ fontSize: '15px', margin: '0 1px', fontWeight: 'bold' }}>Not Published</Typography>
-                <FiberManualRecordIcon sx={{ fontSize: '10px', margin: '0 1px' }} />
-                <Typography sx={{ fontSize: '15px', margin: '0 1px', fontWeight: 'bold' }}>0 Enrolled Users</Typography>
+        <Box sx={{ position: 'relative', display: 'flex', width: '100vw', height: '100vh', overflowX: 'hidden' }}>
+            <Box>
+                <MenuBar />
             </Box>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop: '5%', marginTop: '2%', alignItems: 'center' }}>
+                <Collapse in={open} sx={{ width: '95%' }}>
+                    <Alert severity="success"
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpen(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }>
+                        Collection was successfully created.
+                    </Alert>
+                </Collapse>
 
+                <Typography sx={{ fontSize: '250%', margin: '1%', marginBottom: '0%', fontWeight: 'bold', width: '90%', textAlign: 'start' }}> {(params.samplename)}</Typography>
+                <Box sx={{ width: '90%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', color: '#D3D3D3' }}>
+                    <Typography sx={{ fontSize: '15px', margin: '0 1px', fontWeight: 'bold' }}>Not Published</Typography>
+                    <FiberManualRecordIcon sx={{ fontSize: '10px', margin: '0 1px' }} />
+                    <Typography sx={{ fontSize: '15px', margin: '0 1px', fontWeight: 'bold' }}>0 Enrolled Users</Typography>
+                </Box>
+
+            </Box>
         </Box>
     )
 }
