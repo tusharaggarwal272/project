@@ -10,12 +10,12 @@ const courseRouter = require('./routers/courseRouter');
 
 
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json({ limit: '5mb' }));
+// app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/users', userRouter);
 app.use('/users/verification', authRouter);
-app.use('/api/courses', courseRouter)
+app.use('/api/courses', courseRouter);
 
 app.get('/', (req, res) => {
     console.log("Hello from world");

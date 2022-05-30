@@ -14,7 +14,13 @@ const courseSchema = new mongoose.Schema({
     published: {
         type: Boolean,
         default: false
-    }
+    },
+    videos: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Video'
+        }
+    ]
 }, {
     timestamps: true
 });
