@@ -41,10 +41,17 @@ const Courses = () => {
             setloading(false);
         })
     }, [])
-    console.log(courses);
-    courses.map((c) => {
-        console.log(c.name, c.published)
-    })
+    // console.log(courses);
+    // courses.map((c) => {
+    //     console.log(c.name, c.published)
+    // })
+
+
+    const handleCourseClick = (e, id) => {
+        e.preventDefault();
+        console.log(id);
+        window.location.href = (`/courses/${id}`);
+    }
 
     if (loading) {
         return <Box sx={{ display: 'flex', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
@@ -100,7 +107,7 @@ const Courses = () => {
                                 {
                                     courses.map((course) => (
                                         <Grid item md={3} sm={12} sx={{ margin: '2%' }}>
-                                            <Card >
+                                            <Card onClick={e => handleCourseClick(e, course._id)}>
                                                 <CardActionArea>
                                                     <CardMedia
                                                         src='https://www.coe.int/documents/9558393/53556644/745932934.jpg/b9ddd436-94a9-40fa-c9b3-0e2db8f26c51'

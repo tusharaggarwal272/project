@@ -7,10 +7,17 @@ import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import { TextField } from '@mui/material';
+// import { TextareaAutosize } from '@mui/material';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Button } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import MenuBar from '../Components/MenuBar';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import LinearProgress from '@mui/material/LinearProgress';
+
+// import { toast } from 'react-toastify'
 import "./Home.css";
 
 const style = {
@@ -24,13 +31,30 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const style2 = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'white',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '2%'
+};
+
 function Home() {
 
   let user = (localStorage.getItem('user'));
 
   if (user) {
     user = JSON.parse(user);
-    { console.log(user); console.log(typeof (user)); console.log(user.hasOwnProperty('username')) }
+    // { console.log(user); console.log(typeof (user)); console.log(user.hasOwnProperty('username')) }
   }
   const [mobileverified, setMobileVerified] = useState(user ? user.mobileverified : false);
   const [emailverified, setEmailVerified] = useState(user ? user.emailverified : false);
@@ -40,8 +64,79 @@ function Home() {
   const [loading, setloading] = useState(false)
   const [otp, setotp] = useState();
   const [show, setShow] = useState(false);
+  const [videoModal, setVideoModal] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [video, setVideo] = useState();
+  const [Uploading, setUploading] = useState(false);
+  const [UploadVideoButton, SetUploadVideoButton] = useState('Upload Video');
+  const [progress, setProgress] = useState(0);
   // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const handleClose = (e) => {
+    e.preventDefault();
+    setVideoModal(false);
+  }
+
+  const handleVideoFile = async (e) => {
+    e.preventDefault();
+
+    try {
+      const file = e.target.files[0];
+      SetUploadVideoButton(file.name);
+      // console.log(file);
+      const videoData = new FormData();
+      videoData.append("video", file);
+      console.log(videoData);
+      const { data } = await axios.post('/api/courses/video-upload', videoData, {
+        onUploadProgress: (e) => {
+          setProgress(Math.round((100 * e.loaded) / e.total));
+        }
+      });
+      console.log(data);
+      setVideo(data);
+
+    } catch (error) {
+      console.log("Error while uploading the Video", error.message);
+      // toast("Video Upload failed")
+    }
+  }
+
+
+  const handleVideoRemove = async () => {
+    try {
+      setUploading(true);
+      console.log(video);
+      const { data } = await axios.post('/api/courses/video-remove', { "video": video });
+      setVideo();
+      console.log(data);
+      setUploading(false);
+      setProgress(0);
+      SetUploadVideoButton("Upload Another Video");
+    } catch (error) {
+      setUploading(false);
+      console.log("Error while removing the Video", error.message);
+    }
+  }
+
+  const handleAddVideo = (e) => {
+
+    // e.preventDefault();
+    e.preventDefault();
+    console.log("Clicked the handleAdd video part")
+    setUploading(true);
+    try {
+      const videoDetail = {
+        title: title,
+        description: description,
+        video: video
+      }
+      console.log(videoDetail);
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+    }
+
+  }
 
   const handlemobileotpreq = () => {
     setloading(true);
@@ -93,13 +188,13 @@ function Home() {
 
   useEffect(() => {
     // console.log(typeof (user));
-    console.log(user.mobileverified)
+    // console.log(user.mobileverified)
     setMobileVerified(user.mobileverified);
     setEmailVerified(user.emailverified);
   }, [user])
 
   const handleLogout = () => {
-    console.log("clicking on logout");
+    // console.log("clicking on logout");
     localStorage.removeItem("user");
     window.location.reload();
     return;
@@ -109,7 +204,7 @@ function Home() {
   if (user) {
     {
       // user = JSON.parse(user);
-      console.log(user)
+      // console.log(user)
       // setMobileVerified(user.mobileverified)
       // console.log(user, user.name)
 
@@ -373,6 +468,13 @@ function Home() {
             <div>
             </div>
           </div>
+          <Box sx={{ display: 'flex', flexDirection: 'col', justifyContent: 'center', alignItems: 'center' }}>
+            <Button sx={{ marginBottom: '4%', width: '80%' }} variant='contained' onClick={(e) => {
+              e.preventDefault();
+              setVideoModal(true)
+            }}> <CloudUploadIcon /> &nbsp; Add Video Lesson</Button>
+
+          </Box>
 
 
         </>
@@ -444,8 +546,46 @@ function Home() {
 
           </Box>
         </Modal>
-      </Box>
-    </Box>
+
+        <Modal open={videoModal} onClose={handleClose}>
+          <Box sx={style2}>
+
+            <Typography>Uploading the Video Lesson</Typography>
+            <TextField sx={{ padding: '2%', width: '100%' }} value={title} placeholder='Enter the title of the Video Lesson' onChange={(e) => { setTitle(e.target.value) }}></TextField>
+            {/* <TextareaAutosize value={description} placeholder='Description...' onChange={(e) => { setDescription(e.target.value) }} /> */}
+            <textarea
+              // sx={{ padding: '2%', width: '150%' }}
+              rows={7}
+              cols={60}
+              value={description}
+              // aria-label="empty textarea"
+              placeholder="Enter the Description for the Lesson"
+              // style={{ width: 200 }}
+              onChange={(e) => { setDescription(e.target.value) }}
+
+            />
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              <label style={{ background: 'black', color: 'white', width: '100%', padding: '2%', margin: '2%', display: 'flex', justifyContent: 'space-around' }} >
+                {UploadVideoButton}
+                <input onChange={handleVideoFile} type={"file"} accept="video/*" hidden />
+                {
+                  progress === 100 && <Button variant='contained' ><CancelIcon onClick={handleVideoRemove} /></Button>
+                }
+              </label>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                <Box sx={{ width: '100%', margin: '0' }}>{(progress > 0 && progress !== 100) && <LinearProgress value={progress} />}</Box>
+                {(progress > 0 && progress !== 100) && <Typography>{progress}%</Typography>}
+
+              </Box>
+            </Box>
+
+            <Button disabled={Uploading} sx={{ margin: '2%', width: '100%' }} variant='contained' fullWidth onClick={(e) => handleAddVideo}>SAVE</Button>
+
+          </Box>
+
+        </Modal>
+      </Box >
+    </Box >
 
   )
 }
