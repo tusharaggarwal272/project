@@ -4,12 +4,20 @@ const videoSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true,
-        trim: true
     },
     courseName: {
         type: String,
         required: true,
         trim: true
+    },
+    description: {
+        type: String,
+        trim: true,
+    },
+    title: {
+        type: String,
+        trim: true,
+        lowercase: true,
     }
 
 }, {

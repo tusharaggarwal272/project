@@ -49,7 +49,9 @@ router.post('/user', async (req, res) => {
     } catch (error) {
         return res.status(400).json({ msg: 'Something went wrong try to fetch the courses again' });
     }
-})
+});
+
+
 
 router.post('/video-upload', formidable(), async (req, res) => {
     // console.log('in video upload part')
