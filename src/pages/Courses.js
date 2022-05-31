@@ -106,7 +106,7 @@ const Courses = () => {
 
                                 {
                                     courses.map((course) => (
-                                        <Grid item md={3} sm={12} sx={{ margin: '2%' }}>
+                                        <Grid key={course._id} item md={3} sm={12} sx={{ margin: '2%' }}>
                                             <Card onClick={e => handleCourseClick(e, course._id)}>
                                                 <CardActionArea>
                                                     <CardMedia

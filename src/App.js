@@ -15,7 +15,8 @@ import Collection from './pages/Collection'
 import Users from './pages/Users'
 import NewCollection from './pages/NewCollection'
 import CollectionSubPage from './pages/CollectionSubPage'
-import FrontPage from './pages/FrontPage'
+import FrontPage from './pages/FrontPage';
+import ParticularCourse from './pages/ParticularCourse';
 
 function App() {
   const user = localStorage.getItem('user');
@@ -47,6 +48,7 @@ function App() {
       <Route path="/courses" exact component={Courses} />
       <Route path="/collection" exact component={Collection} />
       <Route path="/users" exact component={Users} />
+      <Route path="/courses/:courseid" exact component={ParticularCourse} />
       {/* </Box> */}
     </BrowserRouter >
     // </Box>
